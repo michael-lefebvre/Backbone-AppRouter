@@ -43,6 +43,7 @@ Wrap __reverse__ and __createUri__ methods in a single call. If multiple possibi
 
 	var catalogueRoute = myrouter.setRoute('catalogue', ['awsome-tag']);
 	console.log("create URI: %s", catalogueRoute);
+	--> create URI: /catalogue/awsome-tag
 
 ### reverse
 
@@ -50,6 +51,7 @@ return an array of matching routes based on method name
 
 	var productRoute = myrouter.reverse('productSheet');
 	console.log("get reverse route: %s", productRoute[0]);
+	--> get reverse route: catalogue/:productId/:rewrite
 
 ### createUri
 
@@ -57,9 +59,16 @@ return an URL base on the route pattern and an array of arguments
 
 	var newProductUrl = app.router.createUri(productRoute[0], [321, 'anoter-product-name'])
 	console.log("create route: %s", newProductUrl);
+	--> create route: /catalogue/321/anoter-product-name
 
 ### productRoute
 
 return the ordonned list of arguments for a route pattern
 
 	myrouter.getArgs(productRoute);
+	--> ["productId", "rewrite"]
+
+## TO DO
+
+enhance the RegExp to match the "file/*path" argument
+
