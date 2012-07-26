@@ -1,0 +1,133 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie ie6 oldie" lang="fr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie ie7 oldie" lang="fr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie ie8 oldie" lang="fr"> <![endif]-->
+<!--[if IE 9]>    <html class="ie ie9" lang="fr"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="fr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Backbone AppRouter</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="home">Home</a>
+		</li>
+		<li>
+			<a href="catalogue/123/product-name">catalogue item</a>
+		</li>
+		<li>
+			<a href="catalogue/rounded-table">catalogue by tag</a>
+		</li>
+		<li>
+			<a href="catalogue">whole catalogue</a>
+		</li>
+		<li>
+			<a href="search/my-query-string">search</a>
+		</li>
+	</ul>
+
+	<script src="./lib/jquery-1.7.1.js"></script>
+	<script src="./lib/underscore.js"></script>
+	<script src="./lib/backbone.js"></script>
+	<script src="../backbone-approuter.js"></script>
+
+<script>
+
+$(function()
+{
+	// App ROUTER //////////////////////////////////////////////////////////
+
+	var app    = {},
+		router = Backbone.Router.extend({
+				routes: {
+					'home'                         : 'home',
+					'catalogue'                    : 'catalogue',
+					'catalogue/:tags'              : 'catalogue',
+					'catalogue/:productId/:rewrite': 'productSheet',
+					'search/*'                     : 'search'
+				},
+				home: function(){
+					console.log('ROUTER -> home'); 
+				},
+				catalogue: function(tag){
+					if(!_.isUndefined(tag))
+					{
+						console.log('ROUTER -> catalogue -> tags -> '+ tag);
+					}
+					else
+					{
+						console.log('ROUTER -> catalogue');
+					}
+				},
+				productSheet: function(productId)
+				{
+					console.log('ROUTER -> catalogue -> productId -> '+ productId);
+				},
+				search: function(query)
+				{
+					console.log('ROUTER -> search -> query -> '+ query);
+				}
+			});
+
+	app.router = new router(); 
+
+	Backbone.history.start({pushState: true, root: '/backbone-approuter/test-backbone/'});
+
+	// Simple ////////////////////////////////////////////////////
+
+	var productRoute = app.router.reverse('productSheet');
+	console.log("get reverse route: %s", productRoute[0]);
+
+	var newProductUrl = app.router.createUri(productRoute[0], [321, 'anoter-product-name'])
+	console.log("create route: %s", newProductUrl);
+
+	console.log(app.router.getArgs(productRoute));
+
+	var searchRoute = app.router.reverse('search');
+	console.log(searchRoute[0])
+	var searchUrl = app.router.createUri(searchRoute[0], ['a fulltext search exemple ?'])
+	console.log("create search route: %s", searchUrl);
+
+
+	// A bit more complicated ////////////////////////////////////////////////////
+
+	// multiple possibilities
+	var catalogueRoute = app.router.setRoute('catalogue', ['awsome-tag']);
+	console.log("create URI: %s", catalogueRoute);
+
+
+	// All navigation that is relative should be passed through the navigate
+	// method, to be processed by the router.  If the link has a data-bypass
+	// attribute, bypass the delegation completely.
+	$(document).on('click', 'a:not([data-bypass])', function(event)
+	{
+		// Get the anchor href and protcol
+		var href = $(this).attr("href");
+		var protocol = this.protocol + "//";
+
+		// Ensure the protocol is not part of URL, meaning its relative.
+		if (href && href.slice(0, protocol.length) !== protocol && href.indexOf("javascript:") !== 0 && href !== '#') 
+		{
+			// Stop the default event to ensure the link will not cause a page
+			// refresh.
+			event.preventDefault();
+
+			// `Backbone.history.navigate` is sufficient for all Routers and will
+			// trigger the correct events.  The Router's internal `navigate` method
+			// calls this anyways.
+			Backbone.history.navigate(href, true);
+		}
+	});
+});
+</script>
+
+</body>
+</html>
