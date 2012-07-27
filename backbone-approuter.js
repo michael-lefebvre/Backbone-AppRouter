@@ -3,13 +3,13 @@
 
   _.extend(Backbone.Router.prototype, Backbone.Events,
   {
-    namedParam: /(?:\:|\*)[^\/]+/g,
+    namedParam: /(:\w+|\*)/g,
 
 // var namedParam    = /:\w+/g;
 // var splatParam    = /\*\w+/g;
 
     /**
-     * give method and it return the associated routes
+     * give method name and it return the associated routes
      *
      * @param   string  method name
      * @return  array
@@ -44,9 +44,12 @@
         }
       }
       
-      Backbone.history || (Backbone.history = new History);
+      if(!_.isUndefined(Backbone.history.options))
+      {
+        _route = Backbone.history.options.root+_route;
+      }
 
-      return Backbone.history.options.root+_route.replace(this.namedParam, '').replace(/\/$/, '');
+      return _route.replace(this.namedParam, '').replace(/\/$/, '');
     },
 
     /**

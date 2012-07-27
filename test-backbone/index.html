@@ -95,7 +95,8 @@ $(function()
 	console.log(searchRoute[0])
 	var searchUrl = app.router.createUri(searchRoute[0], ['a fulltext search exemple ?'])
 	console.log("create search route: %s", searchUrl);
-
+	var searchUrl = app.router.setRoute('search', ['a fulltext search exemple ?']);
+	console.log("create URI: %s", searchUrl);	
 
 	// A bit more complicated ////////////////////////////////////////////////////
 

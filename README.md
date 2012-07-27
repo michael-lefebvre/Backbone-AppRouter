@@ -45,6 +45,10 @@ Wrap __reverse__ and __createUri__ methods in a single call. If multiple possibi
 	console.log("create URI: %s", catalogueRoute);
 	--> create URI: /catalogue/awsome-tag
 
+	var searchUrl = app.router.setRoute('search', ['a fulltext search exemple ?']);
+	console.log("create URI: %s", searchUrl);
+	--> create URI: /search/a%20fulltext%20search%20exemple%20%3F
+
 ### reverse
 
 return an array of matching routes based on method name
@@ -70,5 +74,5 @@ return the ordonned list of arguments for a route pattern
 
 ## TO DO
 
-enhance the RegExp to match the "file/*path" argument
+~~enhance the RegExp to match the "file/*path" argument~~ done...
 
