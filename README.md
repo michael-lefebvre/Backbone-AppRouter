@@ -1,8 +1,10 @@
 # Backbone AppRouter
 
-Extends Backbone.Router to get back a route pattern and construct an URL with arguments.
+Extends Backbone.Router to find back a route pattern and construct an URL with arguments.
 
 ## Methods
+
+Based on the following router.
 
 	var myrouter = Backbone.Router.extend({
 				routes: {
@@ -39,7 +41,7 @@ Extends Backbone.Router to get back a route pattern and construct an URL with ar
 
 ### setRoute
 
-Wrap __reverse__ and __createUri__ methods in a single call. If multiple possibilities, try to find the good route by comparing the numbers of arguments with giving hash 
+Wrap __reverse__ and __createUri__ methods in a single call. If multiple possibilities, try to find the good route by comparing the count of arguments with given hash 
 
 	var catalogueRoute = myrouter.setRoute('catalogue', ['awsome-tag']);
 	console.log("create URI: %s", catalogueRoute);
@@ -59,7 +61,7 @@ return an array of matching routes based on method name
 
 ### createUri
 
-return an URL base on the route pattern and an array of arguments
+return an URL based on the route pattern and an array of arguments
 
 	var newProductUrl = app.router.createUri(productRoute[0], [321, 'anoter-product-name'])
 	console.log("create route: %s", newProductUrl);
@@ -67,7 +69,7 @@ return an URL base on the route pattern and an array of arguments
 
 ### productRoute
 
-return the ordonned list of arguments for a route pattern
+return a list of arguments for a route pattern
 
 	myrouter.getArgs(productRoute);
 	--> ["productId", "rewrite"]
