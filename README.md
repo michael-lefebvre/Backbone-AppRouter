@@ -67,7 +67,7 @@ return an URL based on the route pattern and an array of arguments
 	console.log("create route: %s", newProductUrl);
 	--> create route: /catalogue/321/anoter-product-name
 
-### productRoute
+### getArgs
 
 return a list of arguments for a route pattern
 
