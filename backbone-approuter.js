@@ -44,12 +44,14 @@
         }
       }
       
+      _route = _route.replace(this.namedParam, '').replace(/\/$/, '');
+
       if(!_.isUndefined(Backbone.history.options))
       {
         _route = Backbone.history.options.root+_route;
       }
 
-      return _route.replace(this.namedParam, '').replace(/\/$/, '');
+      return _route;
     },
 
     /**
