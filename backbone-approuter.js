@@ -66,6 +66,7 @@
     setRoute: function(_method, _hash)
     {
       var routes   = this.reverse(_method),
+          _hash    = _hash || [],
           nbArgs   = _hash.length,
           nbRoutes = routes.length;
 
