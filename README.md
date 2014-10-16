@@ -37,7 +37,7 @@ Based on the following router.
 				}
 			});
 
-	app.router = new router(); 
+	app.router = new myrouter(); 
 
 ### setRoute
 
