@@ -46,6 +46,11 @@
       
       _route = _route.replace(this.namedParam, '').replace(/\/$/, '').replace(/\(|\)/g, '');
 
+      if( _route.substr(-1) === '/' )
+      {
+        _route = _route.substr(0, _route.length - 1);
+      }
+
       if(!_.isUndefined(Backbone.history.options))
       {
         _route = Backbone.history.options.root+_route;
