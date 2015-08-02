@@ -44,7 +44,7 @@
         }
       }
       
-      _route = _route.replace(this.namedParam, '').replace(/\/$/, '');
+      _route = _route.replace(this.namedParam, '').replace(/\/$/, '').replace(/\(|\)/g, '');
 
       if(!_.isUndefined(Backbone.history.options))
       {
